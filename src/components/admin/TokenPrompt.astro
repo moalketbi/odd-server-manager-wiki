@@ -1,0 +1,79 @@
+---
+// First-visit / token-rejected UI. Renders a paste box and step-by-step
+// instructions for generating a fine-grained PAT.
+---
+
+<section class="token-prompt">
+  <h1>Wiki Admin</h1>
+  <p class="lead">Paste a GitHub Personal Access Token to start uploading screenshots.</p>
+
+  <ol class="steps">
+    <li>
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">
+        Open GitHub → Settings → Developer settings → Personal access tokens (fine-grained) → Generate new token
+      </a>
+    </li>
+    <li><strong>Repository access:</strong> "Only select repositories" → pick <code>odd-server-manager-wiki</code>.</li>
+    <li><strong>Permissions:</strong> under <em>Repository permissions</em>, set <strong>Contents</strong> to <strong>Read and write</strong>. Leave everything else alone.</li>
+    <li><strong>Expiration:</strong> 90 days is fine. You can regenerate later.</li>
+    <li>Generate and copy the token (starts with <code>github_pat_</code>).</li>
+    <li>Paste it below.</li>
+  </ol>
+
+  <form id="token-form" class="token-form">
+    <label for="token-input" class="visually-hidden">GitHub Personal Access Token</label>
+    <input
+      id="token-input"
+      type="password"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="github_pat_..."
+      required
+      pattern="github_pat_.*"
+    />
+    <button type="submit">Save token &amp; continue</button>
+  </form>
+
+  <p id="token-error" class="token-error" hidden></p>
+  <p class="footnote">Your token never leaves this browser except in Authorization headers to api.github.com. It's stored in localStorage only.</p>
+</section>
+
+<style>
+  .token-prompt {
+    max-width: 620px;
+    margin: 4rem auto 0;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  h1 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+  .lead { color: var(--muted); margin: 0 0 1.5rem; }
+  .steps { line-height: 1.7; padding-left: 1.25rem; color: var(--text); }
+  .steps a { color: var(--accent-high); }
+  .steps code {
+    background: var(--raised); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em;
+  }
+  .token-form {
+    display: flex; gap: 0.5rem; margin: 1.5rem 0 0.75rem; flex-wrap: wrap;
+  }
+  .token-form input {
+    flex: 1; min-width: 240px;
+    background: var(--raised); border: 1px solid var(--border);
+    color: var(--text); padding: 0.6rem 0.85rem; border-radius: 6px;
+    font-family: ui-monospace, monospace;
+  }
+  .token-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .token-form button {
+    background: linear-gradient(180deg, var(--accent-high), var(--accent));
+    color: var(--bg); font-weight: 700; border: 0;
+    padding: 0.6rem 1.25rem; border-radius: 6px; cursor: pointer;
+  }
+  .token-error {
+    color: #ff7c7c; font-size: 0.9rem; margin: 0.5rem 0 0;
+  }
+  .footnote { color: var(--muted); font-size: 0.8rem; margin: 1rem 0 0; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
+  }
+</style>
