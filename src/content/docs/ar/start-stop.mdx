@@ -1,0 +1,34 @@
+---
+title: تشغيل وإيقاف الخادم
+description: التحكم اليومي في الخادم.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+ثلاثة أزرار تدير يومك: **تشغيل**، **إيقاف**، **إعادة تشغيل**.
+
+<Step n={1} title="شغّل الخادم">
+  اضغط زر **تشغيل** الأخضر في النافذة الرئيسية. أول تشغيل يستغرق ٣٠ إلى ٦٠ ثانية.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/start-button.png" alt="زر التشغيل الأخضر" />
+</Step>
+
+<Step n={2} title="انتظر حتى تتحوّل الحالة للأخضر">
+  عند ظهور «الحالة: قيد التشغيل»، يصبح خادمك متصلًا. يستطيع أصدقاؤك الانضمام باستخدام عنوان IP والمنفذ المعروض في شريط الحالة.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/server-running.png" alt="الحالة: قيد التشغيل" />
+</Step>
+
+<Step n={3} title="إعادة تشغيل آمنة (يحفظ أولًا)">
+  اضغط **إعادة تشغيل** عندما تريد تطبيق تغييرات الإعدادات. يحفظ التطبيق العالم قبل إيقاف الخادم، فلا يضيع التقدّم أبدًا.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/restart-confirm.png" alt="مربع تأكيد إعادة التشغيل" />
+</Step>
+
+<Step n={4} title="أوقف الخادم">
+  اضغط **إيقاف** لإغلاق الخادم بشكل نظيف. استخدم دائمًا **إيقاف** بدلًا من إغلاق التطبيق — يقوم التطبيق بحفظ نظيف أولًا.
+</Step>
+
+<Tip label="نصيحة">إغلاق نافذة المدير **لا** يوقف الخادم. استخدم **إيقاف** أولًا.</Tip>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />

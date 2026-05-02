@@ -1,0 +1,34 @@
+---
+title: Start, stop &amp; restart
+description: Day-to-day server controls.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+Three buttons run your day: **Start**, **Stop**, and **Restart**.
+
+<Step n={1} title="Start the server">
+  Press the green **Start** button on the main window. The first start takes 30–60 seconds.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/start-button.png" alt="Green Start button on the main window" />
+</Step>
+
+<Step n={2} title="Watch the status turn green">
+  Once "Status: Running" appears, your server is online. Friends can join using your IP and the port shown in the status bar.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/server-running.png" alt="Status: Running with player count" />
+</Step>
+
+<Step n={3} title="Restart safely (saves first)">
+  Click **Restart** when you want to apply config changes. The app saves the world before stopping the server, so progress is never lost.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/restart-confirm.png" alt="Restart confirmation dialog" />
+</Step>
+
+<Step n={4} title="Stop the server">
+  Click **Stop** to shut the server down cleanly. Always use **Stop** instead of closing the app — the app handles a clean save first.
+</Step>
+
+<Tip>Closing the manager window does **not** stop the server. Use **Stop** first.</Tip>
+
+<DiscordCTA />
