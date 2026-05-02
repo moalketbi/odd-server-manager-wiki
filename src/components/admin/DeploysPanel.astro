@@ -1,0 +1,62 @@
+---
+interface Props {
+  runs: Array<{
+    id: number;
+    status: string;
+    conclusion: string | null;
+    message: string;
+    ago: string;
+    htmlUrl: string;
+  }>;
+}
+const { runs } = Astro.props;
+
+function badge(status: string, conclusion: string | null): string {
+  if (status === 'in_progress' || status === 'queued') return '🟡';
+  if (conclusion === 'success') return '✅';
+  if (conclusion === 'failure') return '❌';
+  return '⚪';
+}
+---
+
+<section class="deploys">
+  <h2 class="deploys-title">Recent deploys</h2>
+  {runs.length === 0 && <p class="empty">No workflow runs yet.</p>}
+  {runs.map((run) => (
+    <a class="deploy" href={run.htmlUrl} target="_blank" rel="noopener">
+      <span class="badge">{badge(run.status, run.conclusion)}</span>
+      <span class="ago">{run.ago}</span>
+      <span class="msg">{run.message}</span>
+    </a>
+  ))}
+</section>
+
+<style>
+  .deploys { margin-top: 2rem; }
+  .deploys-title {
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.5rem;
+  }
+  .deploy {
+    display: grid;
+    grid-template-columns: auto 80px 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.85rem;
+  }
+  .deploy:hover { border-color: var(--border); }
+  .ago { color: var(--muted); }
+  .msg { font-family: ui-monospace, monospace; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .empty { color: var(--muted); font-size: 0.85rem; }
+</style>
