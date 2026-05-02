@@ -1,0 +1,28 @@
+---
+interface Props {
+  label?: string;
+}
+const { label = 'Tip' } = Astro.props;
+---
+
+<aside class="tip-callout">
+  <div class="tip-label">💡 {label}</div>
+  <div class="tip-body"><slot /></div>
+</aside>
+
+<style>
+  .tip-callout {
+    background: rgba(199, 106, 42, 0.08);
+    border-inline-start: 3px solid var(--sl-color-accent);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+  .tip-label {
+    color: var(--sl-color-accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  .tip-body :global(p) { margin: 0; }
+</style>
