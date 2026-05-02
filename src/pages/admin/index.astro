@@ -1,0 +1,55 @@
+---
+// /admin/ — wiki screenshot management panel.
+// This route is intentionally NOT linked from the sidebar and is excluded
+// from sitemap and search indexing. It is publicly reachable (anyone who
+// guesses the URL sees a token prompt) but does nothing without a valid PAT.
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Wiki Admin — ODD Server Manager</title>
+    <link rel="icon" href="/odd-server-manager-wiki/favicon.svg" />
+  </head>
+  <body>
+    <main id="admin-root" class="admin-shell">
+      <p class="admin-loading">Loading admin panel…</p>
+    </main>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0B0C10;
+        --surface: #14161C;
+        --raised: #0E0F13;
+        --border: #2A2D36;
+        --border-soft: #1C1E26;
+        --text: #E8E9EE;
+        --muted: #8A8E9A;
+        --accent: #C76A2A;
+        --accent-high: #FF9B54;
+        --discord: #5865F2;
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      .admin-shell {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+      }
+      .admin-loading {
+        color: var(--muted);
+        text-align: center;
+        padding: 4rem 0;
+      }
+    </style>
+  </body>
+</html>
