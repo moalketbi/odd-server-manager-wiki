@@ -1,1 +1,64 @@
-/* Theme overrides — populated in Task 4. */
+/* Embers palette — brand-derived overrides for Starlight's CSS variables.
+   See https://starlight.astro.build/guides/css-and-tailwind/ for token list. */
+
+/* Typography — must be first per CSS spec */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+
+:root, [data-theme='dark'] {
+  /* Brand accent (Embers orange) */
+  --sl-color-accent-low: #2A1810;
+  --sl-color-accent: #C76A2A;
+  --sl-color-accent-high: #FF9B54;
+
+  /* Backgrounds */
+  --sl-color-black: #0B0C10;
+  --sl-color-gray-7: #0E0F13;   /* sidebar surface */
+  --sl-color-gray-6: #14161C;   /* raised cards */
+  --sl-color-gray-5: #1C1E26;   /* subtle borders */
+  --sl-color-gray-4: #2A2D36;   /* default borders */
+  --sl-color-gray-3: #6C7080;   /* faint text */
+  --sl-color-gray-2: #8A8E9A;   /* muted text */
+  --sl-color-gray-1: #C8CCD6;   /* secondary text */
+  --sl-color-white: #E8E9EE;    /* body text */
+
+  --sl-color-bg: var(--sl-color-black);
+  --sl-color-bg-nav: var(--sl-color-black);
+  --sl-color-bg-sidebar: var(--sl-color-gray-7);
+  --sl-color-text-accent: var(--sl-color-accent-high);
+}
+
+/* Force dark theme — no light mode in v1 */
+:root { color-scheme: dark; }
+
+:root {
+  --sl-font: 'Inter', system-ui, sans-serif;
+  --sl-font-system: 'Inter', system-ui, sans-serif;
+}
+
+[lang='ar'], [dir='rtl'], [dir='rtl'] * {
+  font-family: 'Tajawal', 'Cairo', system-ui, sans-serif;
+}
+
+/* Sidebar polish — section labels in Embers orange, soft active state */
+.sidebar-content nav > ul > li > details > summary,
+.sidebar-content nav > ul > li > a.large {
+  color: var(--sl-color-accent);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.sidebar-content a[aria-current='page'] {
+  background: rgba(199, 106, 42, 0.12);
+  color: var(--sl-color-white);
+  font-weight: 600;
+}
+
+/* Discord social icon — match Discord blurple */
+.social-icons a[href*='discord'] {
+  color: #5865F2;
+}
+.social-icons a[href*='discord']:hover {
+  color: #7B85FF;
+}
