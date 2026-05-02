@@ -1,0 +1,46 @@
+---
+title: Port forwarding (concept)
+description: What ports your server uses and why your router needs to know.
+---
+
+import Tip from '../../../components/Tip.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+If friends outside your home can't connect to your server, this page is for you.
+
+## What's happening
+
+Your computer hosts the server, but your router stands between the internet and your computer. By default, the router blocks unknown incoming traffic. Port forwarding tells the router: *"when traffic for ARK arrives, send it to my computer."*
+
+## Which ports to forward
+
+| Port | Protocol | Purpose |
+|---|---|---|
+| **7777** | UDP | Game traffic (players connecting) |
+| **7778** | UDP | Game traffic (raw) |
+| **27015** | UDP | Steam server browser (so the server appears in lists) |
+
+You forward all three to **your computer's local IP** (looks like `192.168.x.x`).
+
+## Find your computer's local IP
+
+Open Command Prompt and run:
+
+<CopyBlock>ipconfig</CopyBlock>
+
+Look for the line **IPv4 Address** under your active connection. That's the address you give the router.
+
+## How to actually do it on your router
+
+This is where instructions stop being universal — every router brand has a different settings page.
+
+<Tip label="What to do">
+  1. Find your router model (sticker on the back, or label on the bottom).<br/>
+  2. Search the web for **`<your router model> port forwarding`** — there are step-by-step guides for nearly every model.<br/>
+  3. Forward ports **7777, 7778, 27015** (all UDP) to your computer's IPv4 address from above.
+</Tip>
+
+<Tip>Some ISPs use **CGNAT** — meaning even with port forwarding, your home isn't directly reachable. If port forwarding doesn't work after correct setup, contact your ISP and ask for a public IP, or use a tunneling service like Playit.gg.</Tip>
+
+<DiscordCTA body="Stuck on port forwarding? Drop your router model and ISP in our Discord and someone will likely have done it before." />
