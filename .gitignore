@@ -143,9 +143,8 @@ vite.config.ts.timestamp-*
 .vite/
 
 # Astro
-dist/
 .astro/
-.output/
 pnpm-debug.log*
 .env.production
 .DS_Store
+# (dist/ and .output/ already covered by Node template above)
