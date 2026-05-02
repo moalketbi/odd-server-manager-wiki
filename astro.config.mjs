@@ -7,6 +7,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'ODD Server Manager',
+      logo: {
+        src: './src/assets/logo.png',
+        replacesTitle: false,
+      },
       defaultLocale: 'en',
       locales: {
         en: { label: 'English', lang: 'en' },
