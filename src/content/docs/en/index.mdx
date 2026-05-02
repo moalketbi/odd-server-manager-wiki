@@ -1,28 +1,31 @@
 ---
-title: Welcome to ODD Server Manager
-description: Get started with ODD ARK Server Manager.
+title: Run your own ARK server
+description: A friendly guide to the ODD ARK Server Manager.
 template: splash
 hero:
-  tagline: Manage your ARK server with ease.
+  tagline: A friendly guide to running ARK Survival Evolved with the ODD Server Manager.
+  image:
+    file: ../../../../public/banner.png
   actions:
-    - text: Get started
+    - text: Download App
+      link: https://github.com/moalketbi/odd-server-manager-wiki/releases/latest
+      icon: down-caret
+      variant: primary
+    - text: Start the tutorial →
       link: /odd-server-manager-wiki/en/install-server/
-      icon: right-arrow
-    - text: Starlight docs
-      link: https://starlight.astro.build
-      icon: external
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-## Next steps
+## Pick a tutorial to begin
 
-<CardGrid stagger>
-	<Card title="Install your server" icon="document">
-		Follow the [installation guide](/odd-server-manager-wiki/en/install-server/) to set up your ARK server.
-	</Card>
-	<Card title="Manage plugins" icon="add-document">
-		Learn how to install and manage [plugins](/odd-server-manager-wiki/en/plugins/).
-	</Card>
-</CardGrid>
+- 📖 [Welcome &amp; how this wiki works](/odd-server-manager-wiki/en/install-server/)
+- ⚙️ [Install your first server](/odd-server-manager-wiki/en/install-server/)
+- ▶️ [Start, stop &amp; restart](/odd-server-manager-wiki/en/start-stop/)
+- 🧩 [Plugin Loader](/odd-server-manager-wiki/en/plugins/)
+- 🦖 [Game Extractor](/odd-server-manager-wiki/en/extractor/)
+- 💾 [Backups &amp; saves](/odd-server-manager-wiki/en/backups/)
+- 🌐 [Port forwarding (concept)](/odd-server-manager-wiki/en/port-forwarding/)
+
+<DiscordCTA />
