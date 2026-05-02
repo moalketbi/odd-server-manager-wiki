@@ -1,0 +1,34 @@
+---
+title: Plugin Loader
+description: Install, enable, disable, and configure server plugins.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+Plugins add features to your ARK server (like Discord chat relay or admin tools). The Plugin Loader handles installing them.
+
+<Step n={1} title="Open the Plugins tab">
+  Click **Plugins** in the top navigation of the app.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugins-tab.png" alt="Plugins tab open" />
+</Step>
+
+<Step n={2} title="Install a plugin">
+  Click **Install Plugin**, then pick the plugin's `.dll` file. The app copies it into your server's plugin folder.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-install-dialog.png" alt="Install plugin file picker" />
+</Step>
+
+<Step n={3} title="Enable or disable">
+  Each plugin has a toggle. Green = active, grey = disabled. **Restart the server** for changes to take effect.
+</Step>
+
+<Step n={4} title="Configure a plugin">
+  Click the **⚙ Settings** icon next to a plugin to open its config editor. Each plugin has its own settings — read its docs to know what each field does.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="Plugin config editor" />
+</Step>
+
+<Tip>Some plugins require a server restart even when toggled off. When in doubt, restart.</Tip>
+
+<DiscordCTA />

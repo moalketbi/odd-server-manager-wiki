@@ -1,0 +1,34 @@
+---
+title: محمّل الإضافات
+description: تثبيت وتفعيل وتعطيل وضبط إضافات الخادم.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+تضيف الإضافات ميزات لخادم ARK (مثل الربط مع ديسكورد أو أدوات المشرفين). يتولّى محمّل الإضافات تثبيتها.
+
+<Step n={1} title="افتح علامة تبويب الإضافات">
+  اضغط **الإضافات** في شريط التنقل العلوي.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugins-tab.png" alt="علامة تبويب الإضافات" />
+</Step>
+
+<Step n={2} title="ثبّت إضافة">
+  اضغط **تثبيت إضافة**، ثم اختر ملف `.dll` الخاص بالإضافة. سينسخه التطبيق إلى مجلد الإضافات في الخادم.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-install-dialog.png" alt="منتقي ملف الإضافة" />
+</Step>
+
+<Step n={3} title="فعّل أو عطّل">
+  لكل إضافة زر تبديل. أخضر = مفعّلة، رمادي = معطّلة. **أعد تشغيل الخادم** لسريان التغييرات.
+</Step>
+
+<Step n={4} title="اضبط الإضافة">
+  اضغط أيقونة **⚙ الإعدادات** بجانب الإضافة لفتح محرر إعداداتها. لكل إضافة إعداداتها الخاصة — راجع توثيقها.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="محرر إعدادات الإضافة" />
+</Step>
+
+<Tip label="نصيحة">بعض الإضافات تحتاج إعادة تشغيل الخادم حتى عند تعطيلها. إن شككت، أعد التشغيل.</Tip>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />
