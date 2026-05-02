@@ -4,6 +4,9 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
   site: 'https://moalketbi.github.io',
   base: '/odd-server-manager-wiki',
+  redirects: {
+    '/': '/odd-server-manager-wiki/en/',
+  },
   integrations: [
     starlight({
       title: 'ODD Server Manager',
