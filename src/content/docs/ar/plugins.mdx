@@ -1,6 +1,6 @@
 ---
-title: محمّل الإضافات
-description: تثبيت وتفعيل وتعطيل وضبط إضافات الخادم.
+title: إضافات الخادم (ARK Server API)
+description: ثبّت إضافات .dll مثل الربط مع ديسكورد والـ kits وأدوات المشرفين.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -8,27 +8,29 @@ import Tip from '../../../components/Tip.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-تضيف الإضافات ميزات لخادم ARK (مثل الربط مع ديسكورد أو أدوات المشرفين). يتولّى محمّل الإضافات تثبيتها.
+تتيح الإضافات (plugins) لخادمك أن يفعل أشياء لا تستطيعها اللعبة الأصلية — الربط مع ديسكورد، حزم المشرفين (kits)، الأوامر المخصصة، المتاجر. تعمل هذه الإضافات فوق نظام يُسمّى **واجهة برمجة خادم ARK** (ARK Server API)، ويجب تثبيته أولًا.
 
-<Step n={1} title="افتح علامة تبويب الإضافات">
-  اضغط **الإضافات** في شريط التنقل العلوي.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugins-tab.png" alt="علامة تبويب الإضافات" />
+<Tip label="انتبه">الأيقونة المسمّاة **Plugin Loader** في الرأس *ليست* لتثبيت الإضافات. تلك أداة اختصارات RCON — راجع [درس اختصارات RCON](/odd-server-manager-wiki/ar/rcon-commands/). التثبيت يتم في الخطوات أدناه.</Tip>
+
+<Step n={1} title="ثبّت واجهة برمجة خادم ARK على خادمك">
+  في تبويب خادمك، افتح قسم **ARK Server API** (بين قسمي Administration وAutomatic Management). اضغط **Check** للاطلاع على أحدث إصدار، ثم **Install/Update** (تثبيت/تحديث). يحمّل التطبيق ملفات `.dll` الخاصة بالواجهة إلى مجلد خادمك.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/arkapi-expander.png" alt="قسم ARK Server API مع زر التثبيت" />
 </Step>
 
-<Step n={2} title="ثبّت إضافة">
-  اضغط **تثبيت إضافة**، ثم اختر ملف `.dll` الخاص بالإضافة. سينسخه التطبيق إلى مجلد الإضافات في الخادم.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-install-dialog.png" alt="منتقي ملف الإضافة" />
+<Step n={2} title="تصفّح الإضافات">
+  افتح نافذة **محمّل الإضافات** (Plugin Loader) من الرأس (أيقونة قطعة الأحجية) ← انتقل إلى تبويب **Library** (المكتبة) ← اضغط **Browse** (تصفّح). يفتح متصفّح ويب مدمج يعرض فهرس الإضافات عبر الإنترنت. ابحث عن إضافة (مثل *ArkShop* أو *DiscordBot*)، اضغط تحميل. تصل ملفات الإضافة إلى مجلد الإضافات في خادمك.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-browser.png" alt="متصفّح الإضافات المدمج" />
 </Step>
 
-<Step n={3} title="فعّل أو عطّل">
-  لكل إضافة زر تبديل. أخضر = مفعّلة، رمادي = معطّلة. **أعد تشغيل الخادم** لسريان التغييرات.
+<Step n={3} title="اضبط الإضافة">
+  معظم الإضافات تحتاج إعدادات — روابط Discord webhook، أسعار المتجر، إلخ. افتح **نافذة RCON** لخادمك (أيقونة الطرفية في الرأس)، ثم تبويب **محرّر إعدادات الإضافة** (Plugin Config Editor). اختر تبويب الإضافة، عدّل إعداداتها (تُؤكّد حبّة **Valid** الخضراء صحة JSON)، اضغط **Save** (حفظ).
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="محرّر إعدادات الإضافة مع التحقق من JSON" />
 </Step>
 
-<Step n={4} title="اضبط الإضافة">
-  اضغط أيقونة **⚙ الإعدادات** بجانب الإضافة لفتح محرر إعداداتها. لكل إضافة إعداداتها الخاصة — راجع توثيقها.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="محرر إعدادات الإضافة" />
+<Step n={4} title="أعد تشغيل الخادم">
+  تُحمَّل الإضافات عند بدء تشغيل الخادم. أوقف الخادم (استخدم **معالج الإيقاف** (Shutdown Wizard) حتى يحصل اللاعبون على تنبيه)، ثم شغّله.
 </Step>
 
-<Tip label="نصيحة">بعض الإضافات تحتاج إعادة تشغيل الخادم حتى عند تعطيلها. إن شككت، أعد التشغيل.</Tip>
+<Tip label="خطأ شائع">إذا لم تبدُ الإضافات تعمل بعد الخطوة ٤، راجع الخطوة ١ — بدون تثبيت **واجهة برمجة خادم ARK**، يتم تجاهل الإضافات بصمت.</Tip>
 
 <DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />

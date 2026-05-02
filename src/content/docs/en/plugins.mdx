@@ -1,6 +1,6 @@
 ---
-title: Plugin Loader
-description: Install, enable, disable, and configure server plugins.
+title: Server plugins (ARK Server API)
+description: Install .dll plugins like Discord chat relay, kits, and admin tools.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -8,27 +8,29 @@ import Tip from '../../../components/Tip.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-Plugins add features to your ARK server (like Discord chat relay or admin tools). The Plugin Loader handles installing them.
+Plugins let your server do things the base game can't — Discord integration, player kits, admin commands, custom shops. They run on top of a system called **ARK Server API**, which has to be installed first.
 
-<Step n={1} title="Open the Plugins tab">
-  Click **Plugins** in the top navigation of the app.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugins-tab.png" alt="Plugins tab open" />
+<Tip>The icon labelled **Plugin Loader** in the header is *not* for installing plugins. That's an RCON command shortcut tool — see the [RCON shortcuts tutorial](/odd-server-manager-wiki/en/rcon-commands/). Installation happens in the steps below.</Tip>
+
+<Step n={1} title="Install ARK Server API on your server">
+  In your server tab, expand the **ARK Server API** section (between Administration and Automatic Management). Click **Check** to see the latest version, then **Install/Update**. The app downloads the API's `.dll` files into your server folder.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/arkapi-expander.png" alt="ARK Server API expander with Install button" />
 </Step>
 
-<Step n={2} title="Install a plugin">
-  Click **Install Plugin**, then pick the plugin's `.dll` file. The app copies it into your server's plugin folder.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-install-dialog.png" alt="Install plugin file picker" />
+<Step n={2} title="Browse plugins">
+  Open the **Plugin Loader** window from the header (puzzle-piece icon) → go to the **Library** tab → click **Browse**. An embedded web browser opens showing the online plugin catalog. Find a plugin (e.g., *ArkShop*, *DiscordBot*), click download. The plugin's files land in your server's plugins folder.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-browser.png" alt="Built-in plugin browser" />
 </Step>
 
-<Step n={3} title="Enable or disable">
-  Each plugin has a toggle. Green = active, grey = disabled. **Restart the server** for changes to take effect.
+<Step n={3} title="Configure the plugin">
+  Most plugins need configuration — Discord webhook URLs, shop prices, etc. Open the **RCON window** for your server (terminal icon in the header), then the **Plugin Config Editor** tab. Pick the plugin's tab, edit its settings (a green **Valid** pill confirms the JSON is correct), click **Save**.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="Plugin Config Editor with JSON validation" />
 </Step>
 
-<Step n={4} title="Configure a plugin">
-  Click the **⚙ Settings** icon next to a plugin to open its config editor. Each plugin has its own settings — read its docs to know what each field does.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-config-editor.png" alt="Plugin config editor" />
+<Step n={4} title="Restart the server">
+  Plugins load on server start. Stop the server (use the Shutdown Wizard so players get a warning), then Start.
 </Step>
 
-<Tip>Some plugins require a server restart even when toggled off. When in doubt, restart.</Tip>
+<Tip label="Common gotcha">If plugins don't seem to do anything after Step 4, double-check Step 1 — without ARK Server API installed, plugins are silently ignored.</Tip>
 
 <DiscordCTA />
