@@ -1,0 +1,49 @@
+---
+interface Props {
+  total: number;
+  uploaded: number;
+  missing: number;
+  lastDeploy?: { status: 'success' | 'failure' | 'in_progress' | 'pending'; ago: string };
+}
+const { total, uploaded, missing, lastDeploy } = Astro.props;
+---
+
+<section class="stats">
+  <div class="stat">
+    <div class="stat-value">{total}</div>
+    <div class="stat-label">Screenshots referenced</div>
+  </div>
+  <div class="stat stat--ok">
+    <div class="stat-value">{uploaded}</div>
+    <div class="stat-label">Uploaded</div>
+  </div>
+  <div class="stat stat--missing">
+    <div class="stat-value">{missing}</div>
+    <div class="stat-label">Missing</div>
+  </div>
+  {lastDeploy && (
+    <div class={`stat stat--deploy stat--${lastDeploy.status}`}>
+      <div class="stat-label">Last deploy</div>
+      <div class="stat-value-sm">{lastDeploy.ago}</div>
+    </div>
+  )}
+</section>
+
+<style>
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem; margin-bottom: 1.25rem;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.85rem 1rem;
+  }
+  .stat-value { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+  .stat-value-sm { font-size: 0.95rem; font-weight: 600; }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 0.3rem; }
+  .stat--ok .stat-value { color: #6dd28a; }
+  .stat--missing .stat-value { color: var(--accent-high); }
+  .stat--success { border-color: rgba(46,204,113,0.4); }
+  .stat--failure { border-color: rgba(231,76,60,0.4); }
+  .stat--in_progress { border-color: rgba(255,191,71,0.4); }
+</style>
