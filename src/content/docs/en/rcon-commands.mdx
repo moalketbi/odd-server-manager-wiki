@@ -1,0 +1,40 @@
+---
+title: RCON shortcuts
+description: Save the RCON commands you use most so you don't have to type them every time.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+RCON is a way to send admin commands to a running server — broadcast messages, kick players, give items, etc. The **Plugin Loader** window (puzzle-piece icon in the header) is a shortcut manager that saves you from typing the same commands over and over.
+
+<Tip>The window is called **Plugin Loader** for historical reasons. It's actually an RCON command shortcut tool — not a place to install plugins. For installing actual .dll plugins, see [Server plugins](/odd-server-manager-wiki/en/plugins/).</Tip>
+
+<Step n={1} title="Open the Plugin Loader window">
+  Click the **puzzle-piece icon** in the header bar.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-loader-button.png" alt="Plugin Loader icon in the header" />
+</Step>
+
+<Step n={2} title="Browse the Library">
+  The **Library** tab shows commands organized by plugin (or *core* for built-in ARK admin commands). Use the search bar to find e.g. *broadcast*. Each plugin shows a colored dot — green = installed on this server, red = not installed.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/library-tab.png" alt="Library tab with command tree" />
+</Step>
+
+<Step n={3} title="Save a frequently-used command">
+  Click the **star** (☆) on any row to save it to your **Saved** tab. Now it's one double-click away anytime.
+</Step>
+
+<Step n={4} title="Use parameterized commands">
+  Some commands have placeholders like `{player}` or `{message}`. Double-click the command — a small form appears at the bottom of the panel. Fill in the fields, preview the final command, click **Send**.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/parameterized-form.png" alt="Inline parameterized command form" />
+</Step>
+
+<Step n={5} title="Build macros (sequences of commands)">
+  The **Macros** tab lets you chain multiple commands together — for example, *"Restart in 5 minutes"* could be: broadcast → 5-minute wait → saveworld → doexit. Click **Add Macro** to create one.
+</Step>
+
+<Tip>If you're new to RCON, start with the built-in **Broadcast** command — it sends a chat message to all players. Safe to experiment with.</Tip>
+
+<DiscordCTA />

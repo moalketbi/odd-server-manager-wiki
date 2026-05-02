@@ -1,0 +1,40 @@
+---
+title: اختصارات RCON
+description: احفظ أوامر RCON الأكثر استخدامًا حتى لا تضطر لكتابتها في كل مرة.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+RCON هو طريقة لإرسال أوامر المشرف إلى خادم قيد التشغيل — بثّ رسائل، طرد لاعبين، إعطاء أغراض، إلخ. نافذة **محمّل الإضافات** (Plugin Loader) — أيقونة قطعة الأحجية في الرأس — هي مدير اختصارات يُريحك من كتابة نفس الأوامر مرارًا.
+
+<Tip label="ملاحظة">تُسمّى النافذة **Plugin Loader** لأسباب تاريخية. هي في الحقيقة أداة اختصارات RCON — وليست مكانًا لتثبيت الإضافات. لتثبيت إضافات `.dll` فعلية، راجع [إضافات الخادم](/odd-server-manager-wiki/ar/plugins/).</Tip>
+
+<Step n={1} title="افتح نافذة محمّل الإضافات">
+  اضغط **أيقونة قطعة الأحجية** في شريط الرأس.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/plugin-loader-button.png" alt="أيقونة محمّل الإضافات في الرأس" />
+</Step>
+
+<Step n={2} title="تصفّح المكتبة">
+  يعرض تبويب **Library** (المكتبة) الأوامر منظّمةً حسب الإضافة (أو *core* للأوامر المدمجة في ARK). استخدم شريط البحث للعثور على مثلًا *broadcast*. تعرض كل إضافة نقطة ملوّنة — خضراء = مثبّتة على هذا الخادم، حمراء = غير مثبّتة.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/library-tab.png" alt="تبويب المكتبة مع شجرة الأوامر" />
+</Step>
+
+<Step n={3} title="احفظ أمرًا كثير الاستخدام">
+  اضغط **النجمة** (☆) في أي صف لحفظه في تبويب **Saved** (المحفوظة). يصبح الأمر على بُعد نقرة مزدوجة في أي وقت.
+</Step>
+
+<Step n={4} title="استخدم الأوامر ذات المعاملات">
+  بعض الأوامر تحتوي على خانات مثل `{player}` أو `{message}`. انقر مرتين على الأمر — تظهر نموذج صغير في أسفل اللوحة. أملأ الحقول، استعرض الأمر النهائي، اضغط **Send** (إرسال).
+  <Screenshot src="/odd-server-manager-wiki/screenshots/parameterized-form.png" alt="نموذج الأمر ذي المعاملات المضمّن" />
+</Step>
+
+<Step n={5} title="أنشئ ماكروهات (تسلسلات أوامر)">
+  يتيح لك تبويب **Macros** (الماكروهات) ربط عدة أوامر معًا — مثلًا، يمكن أن يكون «إعادة تشغيل خلال ٥ دقائق»: بثّ ← انتظار ٥ دقائق ← saveworld ← doexit. اضغط **Add Macro** لإنشاء ماكرو.
+</Step>
+
+<Tip label="نصيحة">إذا كنت جديدًا على RCON، ابدأ بأمر **Broadcast** (بثّ) المدمج — يرسل رسالة دردشة لجميع اللاعبين. آمن للتجربة.</Tip>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />
