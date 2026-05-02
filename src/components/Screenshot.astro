@@ -1,0 +1,32 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="screenshot">
+  <img src={src} alt={alt} loading="lazy" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .screenshot {
+    margin: 1rem 0;
+  }
+  .screenshot img {
+    width: 100%;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 8px;
+    display: block;
+  }
+  .screenshot figcaption {
+    color: var(--sl-color-gray-3);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+</style>
