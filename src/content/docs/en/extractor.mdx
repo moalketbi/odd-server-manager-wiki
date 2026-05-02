@@ -1,6 +1,6 @@
 ---
-title: Game Extractor
-description: Pull blueprint paths, recipes, and engrams out of installed game files.
+title: Extract game data
+description: Make the app aware of your installed mods so dinos and items show up in dropdowns.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -8,28 +8,27 @@ import Tip from '../../../components/Tip.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-The Game Extractor reads your server's installed game files and outputs blueprint paths, crafting recipes, and engram definitions for every dino and item — including modded content.
+After installing mods, the app's settings dropdowns won't yet show the new dinos, items, and engrams. The **Game Data Extractor** reads your mod files and tells the app what's there.
 
-Useful when you're configuring custom drops, shops, or recipe overrides and you need the exact blueprint path of an item.
-
-<Step n={1} title="Open the Extractor tab">
-  Click **Extractor** in the top navigation.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/extractor-tab.png" alt="Game Extractor tab" />
+<Step n={1} title="Open the Extractor">
+  Click the **archive icon** in the top-right header bar (tooltip: *Game Data Extractor*).
+  <Screenshot src="/odd-server-manager-wiki/screenshots/header-extract-icon.png" alt="Game Data Extractor icon in the header" />
 </Step>
 
-<Step n={2} title="Run extraction">
-  Click **Extract**. The app scans the server's `Mods/` and base game folders. Takes 30–90 seconds depending on installed mods.
+<Step n={2} title="Scan and extract">
+  The window shows a table of every mod installed across all your server profiles. Click **Extract All** at the top — the app reads each mod and writes the extracted data to its internal Game Data folder. Takes 30 seconds to a few minutes per mod.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/extractor-window.png" alt="Game Data Extractor window with mod list" />
 </Step>
 
-<Step n={3} title="Browse the results">
-  Results appear in a searchable table: blueprint path, item name, ingredients with quantities, and the engram (if any).
-  <Screenshot src="/odd-server-manager-wiki/screenshots/extractor-results.png" alt="Extracted blueprint table" />
+<Step n={3} title="Restart the app">
+  After extraction, a banner appears at the top: *"Mods extracted. ASM needs to restart to load the new data."* Click **Restart now**.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/restart-banner.png" alt="Restart banner after extraction" />
 </Step>
 
-<Step n={4} title="Copy a blueprint path">
-  Click the row's copy icon to grab the blueprint path for use in `Game.ini`, custom drop configs, or admin commands.
+<Step n={4} title="Confirm the new content is available">
+  Reopen any server tab and look at e.g. the spawn settings or harvest dropdowns — you should now see the modded dinos and items listed.
 </Step>
 
-<Tip>Re-run extraction whenever you install or update a mod — paths change between mod versions.</Tip>
+<Tip>Re-run extraction whenever you **install a new mod** or **a mod updates**. Paths and content change between mod versions, and stale data leads to mysterious "where's that dino?" issues.</Tip>
 
 <DiscordCTA />
