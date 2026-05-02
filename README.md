@@ -1,49 +1,31 @@
-# Starlight Starter Kit: Basics
+# ODD ARK Server Manager — Wiki
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Tutorials for the ODD ARK Server Manager — English and Arabic.
 
-```
-npm create astro@latest -- --template starlight
-```
+🌐 **Live site:** <https://moalketbi.github.io/odd-server-manager-wiki/>
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Local development
 
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install
+npm run dev
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+Open <http://localhost:4321/odd-server-manager-wiki/>.
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## Adding a tutorial
 
-Static assets, like favicons, can be placed in the `public/` directory.
+1. Copy an existing `.mdx` file in `src/content/docs/en/` and rename it.
+2. Update the frontmatter (`title`, `description`).
+3. Add a matching file at the same path under `src/content/docs/ar/` for the Arabic version.
+4. Drop screenshots into `public/screenshots/`.
+5. Add the page to the sidebar in `astro.config.mjs`.
+6. `git push` — the site rebuilds and redeploys automatically.
 
-## 🧞 Commands
+## Tech stack
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+- [Astro](https://astro.build/) 4.x
+- [Starlight](https://starlight.astro.build/) 0.28.x
+- Markdown / MDX content
+- Pagefind search (built-in)
+- GitHub Actions → GitHub Pages
