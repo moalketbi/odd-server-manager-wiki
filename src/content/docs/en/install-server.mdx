@@ -1,0 +1,36 @@
+---
+title: Install your first server
+description: Set up an ARK Survival Evolved server in about 10 minutes.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+About **10 minutes**. No coding needed.
+
+<Tip>Pick a drive with at least **30 GB** free. ARK is a big game.</Tip>
+
+<Step n={1} title="Download &amp; open the app">
+  Click the download link from the homepage, then double-click `Odd_Server_Manager.exe`.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/main-window.png" alt="Main window of the ODD Server Manager" caption="The window you see on first launch." />
+</Step>
+
+<Step n={2} title="Pick a folder for your server">
+  Click **Settings → Server folder** and paste this path (or pick your own):
+  <CopyBlock>C:\ARKServers\MyFirstServer</CopyBlock>
+  <Screenshot src="/odd-server-manager-wiki/screenshots/server-folder-setting.png" alt="Server folder field in Settings" />
+</Step>
+
+<Step n={3} title="Let SteamCMD download ARK">
+  Click **Install Server**. The app downloads ARK files (~25 GB). Don't close the app.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/steamcmd-progress.png" alt="SteamCMD download progress bar" />
+</Step>
+
+<Step n={4} title="You're ready">
+  When the progress bar fills, the **Start** button lights up. Continue to the next tutorial to launch the server.
+</Step>
+
+<DiscordCTA />

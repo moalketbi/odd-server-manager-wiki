@@ -1,0 +1,36 @@
+---
+title: ثبّت خادمك الأول
+description: جهّز خادم ARK Survival Evolved في حوالي ١٠ دقائق.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+حوالي **١٠ دقائق**. بدون أي خبرة برمجية.
+
+<Tip label="نصيحة">اختر قرصًا فيه **٣٠ غيغابايت** فارغة على الأقل. لعبة ARK كبيرة الحجم.</Tip>
+
+<Step n={1} title="حمّل التطبيق وافتحه">
+  اضغط على رابط التحميل من الصفحة الرئيسية، ثم انقر مرتين على `Odd_Server_Manager.exe`.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/main-window.png" alt="النافذة الرئيسية للتطبيق" caption="النافذة التي تراها عند فتح التطبيق لأول مرة." />
+</Step>
+
+<Step n={2} title="اختر مجلدًا للخادم">
+  افتح **الإعدادات ← مجلد الخادم** والصق هذا المسار (أو اختر مسارك):
+  <CopyBlock>C:\ARKServers\MyFirstServer</CopyBlock>
+  <Screenshot src="/odd-server-manager-wiki/screenshots/server-folder-setting.png" alt="حقل مجلد الخادم في الإعدادات" />
+</Step>
+
+<Step n={3} title="دع SteamCMD يحمّل ARK">
+  اضغط **تثبيت الخادم**. سيُحمّل التطبيق ملفات ARK (~٢٥ غيغابايت). لا تغلق التطبيق.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/steamcmd-progress.png" alt="شريط تقدّم تحميل SteamCMD" />
+</Step>
+
+<Step n={4} title="أصبحت جاهزًا">
+  عندما يمتلئ شريط التقدّم، يصبح زر **التشغيل** قابلًا للضغط. تابع إلى الدرس التالي لتشغيل الخادم.
+</Step>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد — عادةً يُجاب خلال دقائق." cta="انضم" />
