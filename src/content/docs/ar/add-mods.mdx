@@ -1,0 +1,48 @@
+---
+title: إضافة المودات
+description: أضف ديناصورات وأغراضًا وخرائط مخصصة لخادمك باستخدام معرّفات ورشة Steam.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+تأتي المودات (mods) في ARK من ورشة Steam. يحمّلها التطبيق تلقائيًا باستخدام **معرّف ورشة العمل** (Workshop ID) لكل مود. لا تحتاج إلى الاشتراك في Steam.
+
+<Step n={1} title="افتح قسم الخرائط والمودات">
+  في تبويب خادمك، مرّر للأسفل وافتح قسم **Maps and Mods** (الخرائط والمودات).
+  <Screenshot src="/odd-server-manager-wiki/screenshots/maps-and-mods-section.png" alt="قسم الخرائط والمودات في إعدادات الخادم" />
+</Step>
+
+<Step n={2} title="ابحث عن معرّفات ورشة العمل للمودات التي تريدها">
+  لكل مود في ورشة Steam رقم في رابطه. مثلًا، في `https://steamcommunity.com/sharedfiles/filedetails/?id=909710184`، المعرّف هو **`909710184`**.
+
+  يمكنك أيضًا استخدام المتصفّح المدمج:
+
+  - اضغط **أيقونة البحث** بجانب حقل معرّفات المودات
+  - يفتح **متصفّح الورشة** (Workshop browser) — ابحث واختر المودات، ثم اضغط زر **+** في كل صف لإضافتها إلى ملفك التعريفي
+
+  <Screenshot src="/odd-server-manager-wiki/screenshots/workshop-browser.png" alt="متصفّح الورشة المدمج" />
+</Step>
+
+<Step n={3} title="أضف المعرّفات إلى حقل Mod IDs">
+  في حقل **Mod IDs**، الصق المعرّفات مفصولةً بفواصل:
+  <CopyBlock>909710184, 731604991, 558651608</CopyBlock>
+  <Screenshot src="/odd-server-manager-wiki/screenshots/mod-ids-textbox.png" alt="حقل معرّفات المودات مملوء" />
+</Step>
+
+<Step n={4} title="حمّل ملفات المودات">
+  اضغط **أيقونة التحميل** بجانب حقل Mod IDs. يشغّل التطبيق SteamCMD لجلب كل مود (٣٠ ثانية إلى بضع دقائق لكل مود). يجب أن يكون الخادم في حالة **إيقاف** لهذا.
+</Step>
+
+<Step n={5} title="أعد تشغيل الخادم">
+  أوقف الخادم إن كان يعمل، ثم شغّله. يحمّل الخادم المودات عند الإطلاق.
+</Step>
+
+<Tip label="نصيحة">عندما تُحدَّث المودات من المصدر، تعرض بطاقة الإصدار **MODS OUTDATED: N** (مودات قديمة: عدد). اضغط زر التحميل الصغير هناك لتحديثها جميعًا دفعةً واحدة.</Tip>
+
+<Tip label="ترتيب المودات مهم">تُحمَّل المودات بالترتيب المذكور. بعض المودات (مثل مودات التكديس أو مودات التوازن) **يجب أن تأتي في الآخر** لتتجاوز المودات السابقة. اقرأ وصف كل مود.</Tip>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />

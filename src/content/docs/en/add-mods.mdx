@@ -1,0 +1,48 @@
+---
+title: Add mods
+description: Bring custom dinos, items, and maps to your server using Steam Workshop IDs.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import CopyBlock from '../../../components/CopyBlock.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+ARK mods come from the Steam Workshop. The app downloads them automatically using each mod's **Workshop ID**. You don't need to subscribe in Steam.
+
+<Step n={1} title="Open the Maps and Mods section">
+  In your server tab, scroll down and expand the **Maps and Mods** section.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/maps-and-mods-section.png" alt="Maps and Mods section in server settings" />
+</Step>
+
+<Step n={2} title="Find the Workshop IDs of mods you want">
+  Each mod on the Steam Workshop has a number in its URL. For example, in `https://steamcommunity.com/sharedfiles/filedetails/?id=909710184`, the ID is **`909710184`**.
+
+  You can also use the built-in browser:
+
+  - Click the **search icon** next to the Mod IDs field
+  - The Workshop browser opens — search and pick mods, then click the **+** button on each row to add them to your profile
+
+  <Screenshot src="/odd-server-manager-wiki/screenshots/workshop-browser.png" alt="Built-in Workshop browser" />
+</Step>
+
+<Step n={3} title="Add the IDs to the Mod IDs field">
+  In the **Mod IDs** text box, paste the IDs separated by commas:
+  <CopyBlock>909710184, 731604991, 558651608</CopyBlock>
+  <Screenshot src="/odd-server-manager-wiki/screenshots/mod-ids-textbox.png" alt="Mod IDs text box filled in" />
+</Step>
+
+<Step n={4} title="Download the mod files">
+  Click the **download icon** next to the Mod IDs field. The app runs SteamCMD to fetch each mod (~30 seconds to a few minutes per mod). The server must be **Stopped** for this.
+</Step>
+
+<Step n={5} title="Restart the server">
+  Stop the server if it's running, then Start. The server loads the mods on launch.
+</Step>
+
+<Tip>When mods get updated upstream, the version card shows **MODS OUTDATED: N**. Click the small download button there to update them all in one go.</Tip>
+
+<Tip label="Mod order matters">Mods load in the order listed. Some mods (like Stack mods or balance overhauls) **must come last** to override earlier ones. Read each mod's description.</Tip>
+
+<DiscordCTA />
