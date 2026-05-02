@@ -35,11 +35,13 @@ export default defineConfig({
           label: 'Your server',
           translations: { ar: 'الخادم' },
           items: [
-            { label: 'Install server', translations: { ar: 'التثبيت' }, link: '/install-server/' },
-            { label: 'Start & stop', translations: { ar: 'تشغيل وإيقاف' }, link: '/start-stop/' },
-            { label: 'Plugins', translations: { ar: 'الإضافات' }, link: '/plugins/' },
-            { label: 'Extractor', translations: { ar: 'المستخرج' }, link: '/extractor/' },
-            { label: 'Backups', translations: { ar: 'النسخ الاحتياطية' }, link: '/backups/' },
+            { label: 'Install a server', translations: { ar: 'تثبيت الخادم' }, link: '/install-server/' },
+            { label: 'Start, stop & restart', translations: { ar: 'تشغيل وإيقاف' }, link: '/start-stop/' },
+            { label: 'Add mods', translations: { ar: 'إضافة المودات' }, link: '/add-mods/' },
+            { label: 'Extract game data', translations: { ar: 'استخراج بيانات اللعبة' }, link: '/extractor/' },
+            { label: 'Server plugins', translations: { ar: 'إضافات الخادم' }, link: '/plugins/' },
+            { label: 'RCON shortcuts', translations: { ar: 'اختصارات RCON' }, link: '/rcon-commands/' },
+            { label: 'Backups & restore', translations: { ar: 'النسخ الاحتياطية والاستعادة' }, link: '/backups/' },
           ],
         },
         {
