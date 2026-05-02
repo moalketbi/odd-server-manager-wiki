@@ -1,0 +1,41 @@
+---
+import ScreenshotRow from './ScreenshotRow.astro';
+import type { ScreenshotSlot } from '../../lib/admin/scanner';
+
+interface Props {
+  groups: Array<{
+    title: string;
+    slots: Array<{ slot: ScreenshotSlot; uploaded: boolean; thumbnailUrl?: string }>;
+  }>;
+}
+const { groups } = Astro.props;
+---
+
+<section class="checklist">
+  {groups.map((group) => (
+    <div class="group">
+      <h2 class="group-title">{group.title}</h2>
+      {group.slots.map((entry) => (
+        <ScreenshotRow
+          filename={entry.slot.filename}
+          uploaded={entry.uploaded}
+          thumbnailUrl={entry.thumbnailUrl}
+          sourcePages={entry.slot.sourcePages}
+        />
+      ))}
+    </div>
+  ))}
+</section>
+
+<style>
+  .checklist { margin: 1.5rem 0; }
+  .group { margin-bottom: 1.75rem; }
+  .group-title {
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.5rem;
+  }
+</style>
