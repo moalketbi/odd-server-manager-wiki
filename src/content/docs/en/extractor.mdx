@@ -1,0 +1,35 @@
+---
+title: Game Extractor
+description: Pull blueprint paths, recipes, and engrams out of installed game files.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+The Game Extractor reads your server's installed game files and outputs blueprint paths, crafting recipes, and engram definitions for every dino and item — including modded content.
+
+Useful when you're configuring custom drops, shops, or recipe overrides and you need the exact blueprint path of an item.
+
+<Step n={1} title="Open the Extractor tab">
+  Click **Extractor** in the top navigation.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/extractor-tab.png" alt="Game Extractor tab" />
+</Step>
+
+<Step n={2} title="Run extraction">
+  Click **Extract**. The app scans the server's `Mods/` and base game folders. Takes 30–90 seconds depending on installed mods.
+</Step>
+
+<Step n={3} title="Browse the results">
+  Results appear in a searchable table: blueprint path, item name, ingredients with quantities, and the engram (if any).
+  <Screenshot src="/odd-server-manager-wiki/screenshots/extractor-results.png" alt="Extracted blueprint table" />
+</Step>
+
+<Step n={4} title="Copy a blueprint path">
+  Click the row's copy icon to grab the blueprint path for use in `Game.ini`, custom drop configs, or admin commands.
+</Step>
+
+<Tip>Re-run extraction whenever you install or update a mod — paths change between mod versions.</Tip>
+
+<DiscordCTA />
