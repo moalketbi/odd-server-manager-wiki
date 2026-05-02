@@ -1,8 +1,5 @@
 ---
-// /admin/ — wiki screenshot management panel.
-// This route is intentionally NOT linked from the sidebar and is excluded
-// from sitemap and search indexing. It is publicly reachable (anyone who
-// guesses the URL sees a token prompt) but does nothing without a valid PAT.
+import TokenPrompt from '../../components/admin/TokenPrompt.astro';
 ---
 
 <!DOCTYPE html>
@@ -16,10 +13,277 @@
   </head>
   <body>
     <main id="admin-root" class="admin-shell">
-      <p class="admin-loading">Loading admin panel…</p>
+      <p class="admin-loading" data-state="loading">Checking saved token…</p>
+
+      <!-- Hidden by default; the script reveals the right one -->
+      <div data-state="token-prompt" hidden>
+        <TokenPrompt />
+      </div>
+
+      <div data-state="main" hidden>
+        <div data-region="header"></div>
+        <div data-region="stats"></div>
+        <div data-region="checklist"></div>
+        <div data-region="deploys"></div>
+      </div>
     </main>
 
-    <style>
+    <script>
+      import { getToken, setToken, clearToken } from '../../lib/admin/store';
+      import {
+        validateToken, listFilesRecursive, getFileContent,
+        listDirectory, listRecentRuns,
+      } from '../../lib/admin/github';
+      import {
+        findSlotsInMdx, aggregateSlots, pageTitleFromPath,
+        type ScreenshotSlot,
+      } from '../../lib/admin/scanner';
+      import { uploadScreenshot } from '../../lib/admin/upload';
+
+      const root = document.getElementById('admin-root')!;
+      const screens = {
+        loading: root.querySelector('[data-state="loading"]') as HTMLElement,
+        prompt: root.querySelector('[data-state="token-prompt"]') as HTMLElement,
+        main: root.querySelector('[data-state="main"]') as HTMLElement,
+      };
+
+      function show(state: 'loading' | 'prompt' | 'main') {
+        screens.loading.hidden = state !== 'loading';
+        screens.prompt.hidden = state !== 'prompt';
+        screens.main.hidden = state !== 'main';
+      }
+
+      function relativeAgo(iso: string): string {
+        const ms = Date.now() - new Date(iso).getTime();
+        const m = Math.round(ms / 60000);
+        if (m < 1) return 'just now';
+        if (m < 60) return `${m}m ago`;
+        const h = Math.round(m / 60);
+        if (h < 24) return `${h}h ago`;
+        const d = Math.round(h / 24);
+        return `${d}d ago`;
+      }
+
+      async function init() {
+        const token = getToken();
+        if (!token) { show('prompt'); wireTokenForm(); return; }
+
+        const user = await validateToken(token);
+        if (!user) { show('prompt'); wireTokenForm('Token rejected — paste a fresh one.'); return; }
+
+        await renderMain(token, user.login);
+      }
+
+      function wireTokenForm(errorText?: string) {
+        const form = document.getElementById('token-form') as HTMLFormElement;
+        const input = document.getElementById('token-input') as HTMLInputElement;
+        const errEl = document.getElementById('token-error') as HTMLElement;
+        if (errorText) {
+          errEl.textContent = errorText;
+          errEl.hidden = false;
+        }
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          errEl.hidden = true;
+          const value = input.value.trim();
+          const user = await validateToken(value);
+          if (!user) {
+            errEl.textContent = 'Token did not authenticate. Check scopes (Contents:Write) and try again.';
+            errEl.hidden = false;
+            return;
+          }
+          setToken(value);
+          show('loading');
+          await renderMain(value, user.login);
+        });
+      }
+
+      async function renderMain(token: string, username: string) {
+        show('loading');
+        screens.loading.textContent = 'Loading wiki content…';
+
+        // 1. Find every MDX file under src/content/docs/
+        const mdxPaths = (await listFilesRecursive(token, 'src/content/docs/'))
+          .filter((p) => p.endsWith('.mdx') || p.endsWith('.md'));
+
+        // 2. Fetch each file's content and parse <Screenshot> refs.
+        const perFile: { filename: string; fullPath: string; sourcePath: string }[] = [];
+        for (const path of mdxPaths) {
+          const { text } = await getFileContent(token, path);
+          perFile.push(...findSlotsInMdx(text, path));
+        }
+        const slots = aggregateSlots(perFile);
+
+        // 3. List existing uploaded screenshots so we know which slots are filled.
+        const existing = await listDirectory(token, 'public/screenshots');
+        const existingByName = new Map(existing.map((f) => [f.name, f]));
+
+        // 4. Group slots by tutorial page (use first source's title for the heading).
+        type Entry = { slot: ScreenshotSlot; uploaded: boolean; thumbnailUrl?: string };
+        const grouped = new Map<string, Entry[]>();
+        for (const slot of slots) {
+          const groupKey = pageTitleFromPath(slot.sourcePages[0]);
+          const uploaded = existingByName.has(slot.filename);
+          const thumbnailUrl = uploaded
+            ? `https://raw.githubusercontent.com/moalketbi/odd-server-manager-wiki/main/public/screenshots/${slot.filename}`
+            : undefined;
+          if (!grouped.has(groupKey)) grouped.set(groupKey, []);
+          grouped.get(groupKey)!.push({ slot, uploaded, thumbnailUrl });
+        }
+
+        // 5. Render the main panel as raw HTML.
+        const total = slots.length;
+        const uploaded = slots.filter((s) => existingByName.has(s.filename)).length;
+        const missing = total - uploaded;
+
+        const runs = await listRecentRuns(token);
+        const lastDeploy = runs[0]
+          ? {
+              status: runs[0].status === 'completed' ? (runs[0].conclusion ?? 'pending') : runs[0].status,
+              ago: relativeAgo(runs[0].created_at),
+            }
+          : undefined;
+
+        renderHeader(username, true);
+        renderStats(total, uploaded, missing, lastDeploy);
+        renderChecklist(grouped);
+        renderDeploys(runs);
+
+        show('main');
+        wireRowEvents(token);
+      }
+
+      function renderHeader(username: string, healthy: boolean) {
+        const region = root.querySelector('[data-region="header"]')!;
+        region.innerHTML = `
+          <header class="hb">
+            <div class="hb-brand">⚙️ Wiki Admin</div>
+            <div class="hb-user">
+              <span class="hb-dot ${healthy ? 'ok' : 'err'}"></span>
+              <span class="hb-login">@${username}</span>
+              <button id="logout-btn" type="button">Logout</button>
+            </div>
+          </header>
+        `;
+        document.getElementById('logout-btn')!.addEventListener('click', () => {
+          clearToken();
+          location.reload();
+        });
+      }
+
+      function renderStats(total: number, uploaded: number, missing: number, lastDeploy?: { status: string; ago: string }) {
+        const region = root.querySelector('[data-region="stats"]')!;
+        region.innerHTML = `
+          <section class="stats">
+            <div class="stat"><div class="stat-value">${total}</div><div class="stat-label">Referenced</div></div>
+            <div class="stat ok"><div class="stat-value">${uploaded}</div><div class="stat-label">Uploaded</div></div>
+            <div class="stat miss"><div class="stat-value">${missing}</div><div class="stat-label">Missing</div></div>
+            ${lastDeploy ? `<div class="stat dep ${lastDeploy.status}"><div class="stat-label">Last deploy</div><div class="stat-sub">${lastDeploy.ago}</div></div>` : ''}
+          </section>
+        `;
+      }
+
+      function renderChecklist(grouped: Map<string, Array<{ slot: ScreenshotSlot; uploaded: boolean; thumbnailUrl?: string }>>) {
+        const region = root.querySelector('[data-region="checklist"]')!;
+        const groups = Array.from(grouped.entries()).map(([title, entries]) => `
+          <div class="group">
+            <h2 class="group-title">${title}</h2>
+            ${entries.map((entry) => `
+              <div class="row ${entry.uploaded ? 'is-uploaded' : ''}" data-filename="${entry.slot.filename}">
+                <div class="row-status">${entry.uploaded ? '✅' : '☐'}</div>
+                <div class="row-body">
+                  <div class="row-name">${entry.slot.filename}</div>
+                  <div class="row-sources">used in: ${entry.slot.sourcePages.map((p) => p.split('/').slice(-2).join('/')).join(', ')}</div>
+                </div>
+                ${entry.thumbnailUrl ? `<img class="row-thumb" src="${entry.thumbnailUrl}" alt="" />` : '<span></span>'}
+                <div>
+                  <label class="dropzone">
+                    <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+                    <span class="dropzone-text">${entry.uploaded ? 'Replace' : '⬇ Drop file here'}</span>
+                  </label>
+                  <p class="row-msg" hidden></p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `).join('');
+        region.innerHTML = `<section class="checklist">${groups}</section>`;
+      }
+
+      function renderDeploys(runs: Awaited<ReturnType<typeof listRecentRuns>>) {
+        const region = root.querySelector('[data-region="deploys"]')!;
+        if (runs.length === 0) {
+          region.innerHTML = '<p class="empty">No workflow runs yet.</p>';
+          return;
+        }
+        const items = runs.map((r) => {
+          const badge = r.status === 'in_progress' ? '🟡' : r.conclusion === 'success' ? '✅' : r.conclusion === 'failure' ? '❌' : '⚪';
+          return `<a class="deploy" href="${r.html_url}" target="_blank" rel="noopener">
+            <span class="badge">${badge}</span>
+            <span class="ago">${relativeAgo(r.created_at)}</span>
+            <span class="msg">${r.head_commit.message.replace(/[<>]/g, '')}</span>
+          </a>`;
+        }).join('');
+        region.innerHTML = `
+          <section class="deploys">
+            <h2 class="deploys-title">Recent deploys</h2>
+            ${items}
+          </section>
+        `;
+      }
+
+      function wireRowEvents(token: string) {
+        document.querySelectorAll<HTMLElement>('.row').forEach((row) => {
+          const filename = row.dataset.filename!;
+          const input = row.querySelector('input[type="file"]') as HTMLInputElement;
+          const msg = row.querySelector('.row-msg') as HTMLElement;
+
+          // drag-drop
+          ['dragenter', 'dragover'].forEach((ev) =>
+            row.addEventListener(ev, (e) => {
+              e.preventDefault();
+              row.classList.add('is-dragover');
+            }),
+          );
+          ['dragleave', 'drop'].forEach((ev) =>
+            row.addEventListener(ev, (e) => {
+              e.preventDefault();
+              row.classList.remove('is-dragover');
+            }),
+          );
+          row.addEventListener('drop', (e: DragEvent) => {
+            const file = e.dataTransfer?.files?.[0];
+            if (file) handleUpload(token, filename, file, row, msg);
+          });
+
+          // click → file picker
+          input.addEventListener('change', () => {
+            const file = input.files?.[0];
+            if (file) handleUpload(token, filename, file, row, msg);
+          });
+        });
+      }
+
+      async function handleUpload(token: string, filename: string, file: File, row: HTMLElement, msg: HTMLElement) {
+        row.classList.add('is-uploading');
+        msg.hidden = false; msg.className = 'row-msg'; msg.textContent = 'Uploading…';
+        const result = await uploadScreenshot(token, filename, file);
+        row.classList.remove('is-uploading');
+        msg.textContent = result.message;
+        msg.classList.add(result.ok ? 'row-msg--ok' : 'row-msg--err');
+        if (result.ok) {
+          row.classList.add('is-uploaded');
+          (row.querySelector('.row-status') as HTMLElement).textContent = '✅';
+          (row.querySelector('.dropzone-text') as HTMLElement).textContent = 'Replace';
+        }
+      }
+
+      init().catch((err) => {
+        screens.loading.textContent = `Failed to initialise: ${err.message}`;
+      });
+    </script>
+
+    <style is:global>
       :root {
         color-scheme: dark;
         --bg: #0B0C10;
@@ -31,7 +295,6 @@
         --muted: #8A8E9A;
         --accent: #C76A2A;
         --accent-high: #FF9B54;
-        --discord: #5865F2;
         font-family: 'Inter', system-ui, sans-serif;
       }
       html, body {
@@ -40,16 +303,80 @@
         color: var(--text);
         min-height: 100vh;
       }
-      .admin-shell {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem 1.5rem 4rem;
-      }
-      .admin-loading {
-        color: var(--muted);
-        text-align: center;
-        padding: 4rem 0;
-      }
+      .admin-shell { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+      .admin-loading { color: var(--muted); text-align: center; padding: 4rem 0; }
+
+      /* HeaderBar */
+      .hb { display: flex; align-items: center; justify-content: space-between;
+        padding: 0.75rem 1rem; background: var(--surface);
+        border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1rem; }
+      .hb-brand { font-weight: 700; }
+      .hb-user { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+      .hb-login { color: var(--muted); }
+      .hb-dot { width: 8px; height: 8px; border-radius: 50%; }
+      .hb-dot.ok { background: #2ecc71; box-shadow: 0 0 6px rgba(46,204,113,0.6); }
+      .hb-dot.err { background: #e74c3c; }
+      #logout-btn { background: transparent; color: var(--accent-high);
+        border: 1px solid var(--border); padding: 0.3rem 0.7rem;
+        border-radius: 5px; font-size: 0.85rem; cursor: pointer; }
+      #logout-btn:hover { background: var(--raised); }
+
+      /* StatsRow */
+      .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.75rem; margin-bottom: 1.25rem; }
+      .stat { background: var(--surface); border: 1px solid var(--border);
+        border-radius: 10px; padding: 0.85rem 1rem; }
+      .stat-value { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+      .stat-sub { font-size: 0.95rem; font-weight: 600; }
+      .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 0.3rem; }
+      .stat.ok .stat-value { color: #6dd28a; }
+      .stat.miss .stat-value { color: var(--accent-high); }
+      .stat.dep.success { border-color: rgba(46,204,113,0.4); }
+      .stat.dep.failure { border-color: rgba(231,76,60,0.4); }
+      .stat.dep.in_progress { border-color: rgba(255,191,71,0.4); }
+
+      /* Checklist */
+      .checklist { margin: 1.5rem 0; }
+      .group { margin-bottom: 1.75rem; }
+      .group-title { color: var(--accent); font-size: 0.85rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem; }
+
+      /* Row */
+      .row { display: grid; grid-template-columns: 32px 1fr auto auto;
+        align-items: center; gap: 0.85rem; padding: 0.75rem 1rem;
+        background: var(--surface); border: 1px solid var(--border-soft);
+        border-radius: 8px; margin-bottom: 0.5rem; }
+      .row-status { font-size: 1.1rem; text-align: center; }
+      .row-name { font-weight: 600; font-family: ui-monospace, monospace; font-size: 0.9rem; }
+      .row-sources { color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem; }
+      .row-thumb { width: 56px; height: 36px; object-fit: cover; border-radius: 4px;
+        border: 1px solid var(--border); }
+      .dropzone { display: inline-block;
+        border: 1px dashed rgba(255, 155, 84, 0.5);
+        color: var(--accent-high); font-size: 0.85rem; font-weight: 600;
+        padding: 0.4rem 0.85rem; border-radius: 6px; cursor: pointer;
+        transition: background 120ms ease, border-color 120ms ease; }
+      .dropzone:hover, .row.is-dragover .dropzone {
+        background: rgba(255, 155, 84, 0.1); border-color: var(--accent-high); }
+      .row.is-uploading .dropzone { opacity: 0.5; pointer-events: none; }
+      .row.is-uploaded .dropzone { border-style: solid; border-color: var(--border); }
+      .row-msg { font-size: 0.78rem; margin: 0.3rem 0 0; }
+      .row-msg--ok { color: #6dd28a; }
+      .row-msg--err { color: #ff7c7c; }
+
+      /* Deploys */
+      .deploys { margin-top: 2rem; }
+      .deploys-title { color: var(--accent); font-size: 0.85rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem; }
+      .deploy { display: grid; grid-template-columns: auto 80px 1fr;
+        align-items: center; gap: 0.75rem; padding: 0.55rem 0.85rem;
+        background: var(--surface); border: 1px solid var(--border-soft);
+        border-radius: 6px; margin-bottom: 0.4rem; text-decoration: none;
+        color: var(--text); font-size: 0.85rem; }
+      .deploy:hover { border-color: var(--border); }
+      .ago { color: var(--muted); }
+      .msg { font-family: ui-monospace, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .empty { color: var(--muted); font-size: 0.85rem; }
     </style>
   </body>
 </html>
