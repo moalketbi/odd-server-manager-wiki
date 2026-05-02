@@ -62,3 +62,104 @@
 .social-icons a[href*='discord']:hover {
   color: #7B85FF;
 }
+
+/* ───── Homepage hero ───── */
+/* Used on /en/ and /ar/ index pages. The doc template (not splash) keeps the
+   sidebar visible, so the hero is built as inline content. */
+
+.home-hero {
+  margin: 0 0 2.5rem;
+  padding: 2rem 0 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.home-hero__banner {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 14px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  border: 1px solid var(--sl-color-gray-4);
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.home-hero__tagline {
+  color: var(--sl-color-gray-1);
+  font-size: 1.1rem;
+  line-height: 1.55;
+  margin: 0 auto 1.75rem;
+  max-width: 620px;
+}
+
+.home-hero__actions {
+  display: flex;
+  gap: 0.85rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.home-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1.65rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  white-space: nowrap;
+}
+
+.home-hero__btn:hover { transform: translateY(-1px); }
+
+.home-hero__btn--primary {
+  background: linear-gradient(180deg, var(--sl-color-accent-high) 0%, var(--sl-color-accent) 100%);
+  color: #14161c;
+  box-shadow: 0 8px 22px -8px rgba(199, 106, 42, 0.7);
+}
+.home-hero__btn--primary:hover {
+  box-shadow: 0 10px 28px -8px rgba(199, 106, 42, 0.9);
+}
+
+.home-hero__btn--minimal {
+  color: var(--sl-color-accent-high);
+  border: 1px solid rgba(255, 155, 84, 0.45);
+  background: transparent;
+}
+.home-hero__btn--minimal:hover {
+  background: rgba(255, 155, 84, 0.08);
+}
+
+/* Tutorial list on the homepage — make the bullets feel like a wiki index, not a plain UL */
+.home-tutorials ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1.5rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.home-tutorials ul li {
+  background: var(--sl-color-gray-7);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+}
+.home-tutorials ul li:hover {
+  border-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-6);
+  transform: translateX(2px);
+}
+[dir='rtl'] .home-tutorials ul li:hover { transform: translateX(-2px); }
+.home-tutorials ul li a {
+  color: var(--sl-color-white);
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+}
+.home-tutorials ul li a:hover {
+  color: var(--sl-color-accent-high);
+}

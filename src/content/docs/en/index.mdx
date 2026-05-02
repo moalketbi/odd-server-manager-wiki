@@ -1,24 +1,25 @@
 ---
 title: Run your own ARK server
 description: A friendly guide to the ODD ARK Server Manager.
-template: splash
-hero:
-  tagline: A friendly guide to running ARK Survival Evolved with the ODD Server Manager.
-  image:
-    file: ../../../../public/banner.png
-  actions:
-    - text: Download App
-      link: https://github.com/moalketbi/odd-server-manager-wiki/releases/latest
-      icon: down-caret
-      variant: primary
-    - text: Start the tutorial →
-      link: /odd-server-manager-wiki/en/install-server/
-      variant: minimal
+tableOfContents: false
+prev: false
+next: false
 ---
 
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
+<div class="home-hero">
+  <img class="home-hero__banner" src="/odd-server-manager-wiki/banner.png" alt="ODD Server Manager" />
+  <p class="home-hero__tagline">A friendly guide to running ARK Survival Evolved with the ODD Server Manager — no coding needed.</p>
+  <div class="home-hero__actions">
+    <a class="home-hero__btn home-hero__btn--primary" href="https://github.com/moalketbi/odd-server-manager-wiki/releases/latest">⬇ Download App</a>
+    <a class="home-hero__btn home-hero__btn--minimal" href="/odd-server-manager-wiki/en/install-server/">Start the tutorial →</a>
+  </div>
+</div>
+
 ## Pick a tutorial to begin
+
+<div class="home-tutorials">
 
 - 📖 [Welcome &amp; how this wiki works](/odd-server-manager-wiki/en/install-server/)
 - ⚙️ [Install your first server](/odd-server-manager-wiki/en/install-server/)
@@ -27,5 +28,7 @@ import DiscordCTA from '../../../components/DiscordCTA.astro';
 - 🦖 [Game Extractor](/odd-server-manager-wiki/en/extractor/)
 - 💾 [Backups &amp; saves](/odd-server-manager-wiki/en/backups/)
 - 🌐 [Port forwarding (concept)](/odd-server-manager-wiki/en/port-forwarding/)
+
+</div>
 
 <DiscordCTA />
