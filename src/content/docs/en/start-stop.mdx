@@ -1,6 +1,6 @@
 ---
 title: Start, stop &amp; restart
-description: Day-to-day server controls.
+description: Day-to-day server controls. The app warns players before stopping or restarting.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -8,27 +8,34 @@ import Tip from '../../../components/Tip.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-Three buttons run your day: **Start**, **Stop**, and **Restart**.
+Three actions live in the **profile strip** at the top of your server tab: **Start**, **Stop**, and the **Shutdown Wizard** (which handles graceful restarts and updates).
 
 <Step n={1} title="Start the server">
-  Press the green **Start** button on the main window. The first start takes 30–60 seconds.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/start-button.png" alt="Green Start button on the main window" />
+  Click the green **Start** button in the profile strip. The status dot turns amber (Initializing) for ~30–60 seconds, then green (Running) when the server is joinable. Players can now connect using your IP and the port shown in the strip.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/start-button.png" alt="Green Start button on the profile strip" />
 </Step>
 
-<Step n={2} title="Watch the status turn green">
-  Once "Status: Running" appears, your server is online. Friends can join using your IP and the port shown in the status bar.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/server-running.png" alt="Status: Running with player count" />
+<Step n={2} title="Stop the server with a player warning">
+  Click the red **Stop** button. The **Shutdown Wizard** opens. Drag the **Shutdown Interval** slider to e.g. **5 minutes** — players see a countdown in chat. Type a **Shutdown Reason** like *"Restarting for an update — back in 5"* — players see this too. Click **Shutdown** to start the countdown.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/shutdown-window.png" alt="Shutdown Wizard with interval slider and reason field" />
+  <Tip>Always give players a heads-up. Losing progress mid-fight is the fastest way to make people leave the server.</Tip>
 </Step>
 
-<Step n={3} title="Restart safely (saves first)">
-  Click **Restart** when you want to apply config changes. The app saves the world before stopping the server, so progress is never lost.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/restart-confirm.png" alt="Restart confirmation dialog" />
+<Step n={3} title="Restart, backup, or update in one click">
+  The same Shutdown Wizard has three checkboxes:
+
+  - **Restart Server** — server stops, then automatically starts again.
+  - **Back Up World File** — takes a snapshot of the world before stopping. Recommended before any update.
+  - **Update Server** — runs SteamCMD to pull the latest ARK update during the stop.
+
+  Tick the ones you want, click **Shutdown**, and the wizard runs the whole sequence in order.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/shutdown-countdown.png" alt="Shutdown countdown with checkboxes ticked" />
 </Step>
 
-<Step n={4} title="Stop the server">
-  Click **Stop** to shut the server down cleanly. Always use **Stop** instead of closing the app — the app handles a clean save first.
+<Step n={4} title="Need to stop NOW (no countdown)?">
+  There's a separate **immediate Stop** button (also red, but distinct from the wizard's Shutdown). Use this **only if the server is hung** and isn't responding — it's a hard kill with no save and no warning.
 </Step>
 
-<Tip>Closing the manager window does **not** stop the server. Use **Stop** first.</Tip>
+<Tip>Closing the manager window does **not** stop the server. The server keeps running in the background. Always use Stop first.</Tip>
 
 <DiscordCTA />
