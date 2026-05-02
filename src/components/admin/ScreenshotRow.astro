@@ -1,0 +1,66 @@
+---
+interface Props {
+  filename: string;
+  uploaded: boolean;
+  thumbnailUrl?: string;
+  sourcePages: string[];
+}
+const { filename, uploaded, thumbnailUrl, sourcePages } = Astro.props;
+---
+
+<div class="row" data-filename={filename}>
+  <div class="row-status" aria-hidden="true">{uploaded ? '✅' : '☐'}</div>
+  <div class="row-body">
+    <div class="row-name">{filename}</div>
+    <div class="row-sources">used in: {sourcePages.map((p) => p.split('/').slice(-2).join('/')).join(', ')}</div>
+  </div>
+  {uploaded && thumbnailUrl && (
+    <img class="row-thumb" src={thumbnailUrl} alt="" loading="lazy" />
+  )}
+  <div class="row-action">
+    <label class="dropzone">
+      <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+      <span class="dropzone-text">{uploaded ? 'Replace' : '⬇ Drop file here'}</span>
+    </label>
+    <p class="row-msg" hidden></p>
+  </div>
+</div>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+  .row-status { font-size: 1.1rem; text-align: center; }
+  .row-name { font-weight: 600; font-family: ui-monospace, monospace; font-size: 0.9rem; }
+  .row-sources { color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem; }
+  .row-thumb {
+    width: 56px; height: 36px; object-fit: cover; border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .dropzone {
+    display: inline-block;
+    border: 1px dashed rgba(255, 155, 84, 0.5);
+    color: var(--accent-high);
+    font-size: 0.85rem; font-weight: 600;
+    padding: 0.4rem 0.85rem; border-radius: 6px;
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .dropzone:hover, .row.is-dragover .dropzone {
+    background: rgba(255, 155, 84, 0.1);
+    border-color: var(--accent-high);
+  }
+  .row.is-uploading .dropzone { opacity: 0.5; pointer-events: none; }
+  .row.is-uploaded .dropzone { border-style: solid; border-color: var(--border); }
+  .row-msg { font-size: 0.78rem; margin: 0.3rem 0 0; }
+  .row-msg.row-msg--ok { color: #6dd28a; }
+  .row-msg.row-msg--err { color: #ff7c7c; }
+</style>
