@@ -1,0 +1,29 @@
+---
+title: النسخ الاحتياطية وملفات الحفظ
+description: التقط لقطة لعالمك وارجع إليها إذا حدث خطأ.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+مود سيئ، حفظ تالف، قبيلة غاضبة — النسخ الاحتياطية تتراجع عن كل ذلك.
+
+<Step n={1} title="افتح علامة تبويب النسخ الاحتياطية">
+  اضغط **النسخ الاحتياطية** في شريط التنقل. سترى قائمة باللقطات السابقة، الأحدث أولًا.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/backups-tab.png" alt="علامة تبويب النسخ الاحتياطية" />
+</Step>
+
+<Step n={2} title="خذ نسخة احتياطية يدوية">
+  اضغط **أنشئ نسخة الآن**. يوقف التطبيق حفظ العالم مؤقتًا، ينسخه، ثم يستأنف — عادةً أقل من ١٠ ثوانٍ.
+</Step>
+
+<Step n={3} title="استرجع من لقطة">
+  اختر صف اللقطة ← **استرجع**. سيُستبدل العالم الحالي. يتوقف الخادم تلقائيًا، يسترجع اللقطة، ثم يعيد التشغيل.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/restore-dialog.png" alt="مربع تأكيد الاسترجاع" />
+</Step>
+
+<Tip label="نصيحة">**خذ دائمًا نسخة احتياطية يدوية قبل تثبيت أو إزالة أي مود.** تغييرات المودات هي السبب الأول لتلف ملفات الحفظ.</Tip>
+
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />

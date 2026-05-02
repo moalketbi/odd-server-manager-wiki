@@ -1,0 +1,29 @@
+---
+title: Backups &amp; saves
+description: Snapshot your world and roll back if something breaks.
+---
+
+import Step from '../../../components/Step.astro';
+import Tip from '../../../components/Tip.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import DiscordCTA from '../../../components/DiscordCTA.astro';
+
+A bad mod, a corrupted save, an angry tribe — backups undo all of it.
+
+<Step n={1} title="Open the Backups tab">
+  Click **Backups** in the top navigation. You'll see a list of past snapshots, newest first.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/backups-tab.png" alt="Backups tab with snapshot list" />
+</Step>
+
+<Step n={2} title="Take a manual backup">
+  Click **Backup Now**. The app pauses the world save, copies it, and resumes — usually under 10 seconds.
+</Step>
+
+<Step n={3} title="Restore from a snapshot">
+  Pick a snapshot row → **Restore**. The current world is replaced. The server stops automatically, restores the snapshot, and restarts.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/restore-dialog.png" alt="Restore confirmation dialog" />
+</Step>
+
+<Tip>**Always take a manual backup before installing or removing a mod.** Mod changes are the #1 cause of save corruption.</Tip>
+
+<DiscordCTA />
