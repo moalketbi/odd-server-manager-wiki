@@ -1,0 +1,28 @@
+---
+title: Welcome to ODD Server Manager
+description: Get started with ODD ARK Server Manager.
+template: splash
+hero:
+  tagline: Manage your ARK server with ease.
+  actions:
+    - text: Get started
+      link: /odd-server-manager-wiki/en/install-server/
+      icon: right-arrow
+    - text: Starlight docs
+      link: https://starlight.astro.build
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Next steps
+
+<CardGrid stagger>
+	<Card title="Install your server" icon="document">
+		Follow the [installation guide](/odd-server-manager-wiki/en/install-server/) to set up your ARK server.
+	</Card>
+	<Card title="Manage plugins" icon="add-document">
+		Learn how to install and manage [plugins](/odd-server-manager-wiki/en/plugins/).
+	</Card>
+</CardGrid>
