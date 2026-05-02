@@ -1,6 +1,6 @@
 ---
-title: Backups &amp; saves
-description: Snapshot your world and roll back if something breaks.
+title: Backups &amp; restore
+description: Snapshot your world automatically and roll back if a mod or update breaks something.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -8,22 +8,28 @@ import Tip from '../../../components/Tip.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-A bad mod, a corrupted save, an angry tribe — backups undo all of it.
+The app makes backups in **three different ways**. Knowing all three saves you when things go wrong.
 
-<Step n={1} title="Open the Backups tab">
-  Click **Backups** in the top navigation. You'll see a list of past snapshots, newest first.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/backups-tab.png" alt="Backups tab with snapshot list" />
+<Step n={1} title="Auto-Backup task (set and forget)">
+  Look at the **top center** of the app for the **Auto-Backup** pill. Click the **bell icon** to enable — the app sets up a Windows scheduled task that backs up your worlds on a regular schedule. Click the **▶** button next to the bell to run a backup right now.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/auto-backup-pill.png" alt="Auto-Backup pill in the header" />
 </Step>
 
-<Step n={2} title="Take a manual backup">
-  Click **Backup Now**. The app pauses the world save, copies it, and resumes — usually under 10 seconds.
+<Step n={2} title="Backup before stop (manual safety net)">
+  When you click Stop, the **Shutdown Wizard** has a **Back Up World File** checkbox. Tick it before stopping when you're about to install a mod, update the server, or change a major setting. You'll have a clean snapshot to restore to if it breaks.
 </Step>
 
 <Step n={3} title="Restore from a snapshot">
-  Pick a snapshot row → **Restore**. The current world is replaced. The server stops automatically, restores the snapshot, and restarts.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/restore-dialog.png" alt="Restore confirmation dialog" />
+  When something goes wrong, open the **World Save Restore** window for your server (right-click the profile tab → *Manage Saves*). The window lists every backup `.ark` file with date columns:
+
+  - The **active save** is highlighted in amber
+  - Click the **download icon** on any older row to restore — it replaces the current save and the server reloads it on next start
+
+  <Screenshot src="/odd-server-manager-wiki/screenshots/world-save-restore.png" alt="World Save Restore window with backup list" />
 </Step>
 
 <Tip>**Always take a manual backup before installing or removing a mod.** Mod changes are the #1 cause of save corruption.</Tip>
+
+<Tip label="Disk space">There's no auto-cleanup of old backups. If you've been running for a while, check your backup folder occasionally and delete the very old ones to free disk space.</Tip>
 
 <DiscordCTA />
