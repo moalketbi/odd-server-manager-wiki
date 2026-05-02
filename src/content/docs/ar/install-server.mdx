@@ -1,6 +1,6 @@
 ---
-title: ثبّت خادمك الأول
-description: جهّز خادم ARK Survival Evolved في حوالي ١٠ دقائق.
+title: تثبيت الخادم
+description: أنشئ ملف تعريف للخادم ودع التطبيق يحمّل ARK لك. يستغرق ٣٠ إلى ٦٠ دقيقة.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -9,28 +9,32 @@ import CopyBlock from '../../../components/CopyBlock.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-حوالي **١٠ دقائق**. بدون أي خبرة برمجية.
+يستخدم التطبيق **SteamCMD** (أداة Steam لسطر الأوامر) لتحميل ملفات خادم ARK: Survival Evolved وتثبيتها تلقائيًا. لا تحتاج إلى حساب Steam أو فتح تطبيق Steam — التطبيق يتولّى كل شيء.
 
 <Tip label="نصيحة">اختر قرصًا فيه **٣٠ غيغابايت** فارغة على الأقل. لعبة ARK كبيرة الحجم.</Tip>
 
-<Step n={1} title="حمّل التطبيق وافتحه">
-  اضغط على رابط التحميل من الصفحة الرئيسية، ثم انقر مرتين على `Odd_Server_Manager.exe`.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/main-window.png" alt="النافذة الرئيسية للتطبيق" caption="النافذة التي تراها عند فتح التطبيق لأول مرة." />
+<Step n={1} title="أنشئ ملف تعريف خادم جديد">
+  اضغط زر **+** الموجود على يمين شريط التبويبات في أعلى التطبيق. يظهر تبويب جديد بإعدادات افتراضية — هذا هو ملف تعريف خادمك.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/new-profile-tab.png" alt="زر + على شريط التبويبات" caption="يحصل كل ملف تعريف خادم على تبويب خاص به." />
 </Step>
 
-<Step n={2} title="اختر مجلدًا للخادم">
-  افتح **الإعدادات ← مجلد الخادم** والصق هذا المسار (أو اختر مسارك):
+<Step n={2} title="اختر مجلدًا لملفات الخادم">
+  في التبويب الجديد، ابحث عن **شريط الملف التعريفي** في الأعلى. اضغط **Set Location** (تحديد المسار) — الزر الأزرق — تفتح نافذة اختيار المجلد. اختر أو أنشئ مجلدًا لملفات الخادم، مثل:
   <CopyBlock>C:\ARKServers\MyFirstServer</CopyBlock>
-  <Screenshot src="/odd-server-manager-wiki/screenshots/server-folder-setting.png" alt="حقل مجلد الخادم في الإعدادات" />
+  <Screenshot src="/odd-server-manager-wiki/screenshots/set-location-dialog.png" alt="نافذة اختيار مجلد الخادم" />
 </Step>
 
-<Step n={3} title="دع SteamCMD يحمّل ARK">
-  اضغط **تثبيت الخادم**. سيُحمّل التطبيق ملفات ARK (~٢٥ غيغابايت). لا تغلق التطبيق.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/steamcmd-progress.png" alt="شريط تقدّم تحميل SteamCMD" />
+<Step n={3} title="اضغط Install">
+  زر **Install** (تثبيت) — الأزرق بأيقونة التحميل — موجود في نفس شريط الملف التعريفي. اضغطه. تنفتح نافذة تقدّم تعرض مخرجات SteamCMD مباشرةً أثناء تحميل ARK.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/install-progress.png" alt="نافذة تقدّم SteamCMD" />
+  <Tip label="نصيحة">يستغرق هذا ٣٠ إلى ٦٠ دقيقة على اتصال منزلي عادي. لا تغلق نافذة التقدّم — دعها تنتهي.</Tip>
 </Step>
 
 <Step n={4} title="أصبحت جاهزًا">
-  عندما يمتلئ شريط التقدّم، يصبح زر **التشغيل** قابلًا للضغط. تابع إلى الدرس التالي لتشغيل الخادم.
+  عند إغلاق نافذة التقدّم، يتحوّل مؤشر الحالة في رأس التبويب إلى اللون الأحمر (متوقف — أي أن الملفات ثُبّتت والخادم جاهز للتشغيل). تعرض بطاقة الإصدار الآن رقم البناء المثبّت.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/profile-strip-installed.png" alt="شريط الملف التعريفي مع ظهور رقم الإصدار" caption="النقطة الحمراء = مثبّت وجاهز للتشغيل." />
+
+  تابع إلى الدرس التالي لتشغيل الخادم.
 </Step>
 
-<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد — عادةً يُجاب خلال دقائق." cta="انضم" />
+<DiscordCTA title="هل أنت عالق؟" body="اسأل المجتمع على ديسكورد." cta="انضم" />

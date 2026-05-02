@@ -1,6 +1,6 @@
 ---
-title: Install your first server
-description: Set up an ARK Survival Evolved server in about 10 minutes.
+title: Install a server
+description: Create a server profile and let the app download ARK for you. Takes 30–60 minutes.
 ---
 
 import Step from '../../../components/Step.astro';
@@ -9,28 +9,32 @@ import CopyBlock from '../../../components/CopyBlock.astro';
 import Screenshot from '../../../components/Screenshot.astro';
 import DiscordCTA from '../../../components/DiscordCTA.astro';
 
-About **10 minutes**. No coding needed.
+The app uses **SteamCMD** (Steam's command-line tool) to download and install the ARK: Survival Evolved server files for you. You don't need a Steam account or Steam client open — the app handles everything.
 
 <Tip>Pick a drive with at least **30 GB** free. ARK is a big game.</Tip>
 
-<Step n={1} title="Download &amp; open the app">
-  Click the download link from the homepage, then double-click `Odd_Server_Manager.exe`.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/main-window.png" alt="Main window of the ODD Server Manager" caption="The window you see on first launch." />
+<Step n={1} title="Create a new server profile">
+  Click the **+** button to the right of the tab strip at the top of the app. A new tab appears with default settings — this is your server profile.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/new-profile-tab.png" alt="The + button on the tab strip" caption="A new server profile gets its own tab." />
 </Step>
 
-<Step n={2} title="Pick a folder for your server">
-  Click **Settings → Server folder** and paste this path (or pick your own):
+<Step n={2} title="Pick a folder for the server files">
+  In the new profile tab, find the **profile strip** at the top. Click **Set Location** (blue button) — a folder picker opens. Pick or create a folder where the server files will live, e.g.:
   <CopyBlock>C:\ARKServers\MyFirstServer</CopyBlock>
-  <Screenshot src="/odd-server-manager-wiki/screenshots/server-folder-setting.png" alt="Server folder field in Settings" />
+  <Screenshot src="/odd-server-manager-wiki/screenshots/set-location-dialog.png" alt="Folder picker for the server location" />
 </Step>
 
-<Step n={3} title="Let SteamCMD download ARK">
-  Click **Install Server**. The app downloads ARK files (~25 GB). Don't close the app.
-  <Screenshot src="/odd-server-manager-wiki/screenshots/steamcmd-progress.png" alt="SteamCMD download progress bar" />
+<Step n={3} title="Click Install">
+  The **Install** button (blue, with a download icon) is in the same profile strip. Click it. A progress window opens and shows live SteamCMD output as it downloads ARK.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/install-progress.png" alt="SteamCMD progress window" />
+  <Tip>This takes 30–60 minutes on a typical home connection. Don't close the progress window — let it finish.</Tip>
 </Step>
 
 <Step n={4} title="You're ready">
-  When the progress bar fills, the **Start** button lights up. Continue to the next tutorial to launch the server.
+  When the progress window closes, the status dot in the tab header turns red (Stopped — meaning the files are installed and the server is ready to start). The version card now shows the installed build number.
+  <Screenshot src="/odd-server-manager-wiki/screenshots/profile-strip-installed.png" alt="Profile strip with version number filled in" caption="Red dot = installed and ready to start." />
+
+  Continue to the next tutorial to launch the server.
 </Step>
 
 <DiscordCTA />
